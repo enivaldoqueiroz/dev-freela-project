@@ -10,8 +10,9 @@ namespace DevFreela.API.Controllers
     {
         private readonly OpenigTimeOption _option;
 
-        public ProjectsController(IOptions<OpenigTimeOption> option)
+        public ProjectsController(IOptions<OpenigTimeOption> option, ExampleClass exampleClass)
         {
+            exampleClass.Name = "Update at ProjectController";
             _option = option.Value;
         }
 

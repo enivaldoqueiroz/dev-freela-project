@@ -12,6 +12,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<OpenigTimeOption>(configuration.GetSection("OpenigTime"));
 
+// AddSingleton - uma instância por aplicação
+//builder.Services.AddSingleton<ExampleClass>(e => new ExampleClass { Name = "Initial Stage"});
+
+// AddScoped - uma instância por requisição
+builder.Services.AddScoped<ExampleClass>(e => new ExampleClass { Name = "Initial Stage"});
+
+// AddTransient - uma instância por classe
+//builder.Services.AddTransient<ExampleClass>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
