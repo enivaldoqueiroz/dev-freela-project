@@ -1,5 +1,6 @@
 ﻿using DevFreela.API.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace DevFreela.API.Controllers
 {
@@ -7,6 +8,13 @@ namespace DevFreela.API.Controllers
     [ApiController]
     public class ProjectsController : ControllerBase
     {
+        private readonly OpenigTimeOption _option;
+
+        public ProjectsController(IOptions<OpenigTimeOption> option)
+        {
+            _option = option.Value;
+        }
+
         // api/projects?query=net core GET
         [HttpGet]
         public IActionResult Get(string query)
