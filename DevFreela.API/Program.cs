@@ -1,5 +1,7 @@
 using DevFreela.API.Model;
-using Microsoft.Extensions.DependencyInjection;
+using DevFreela.Application.Services.Implamentations;
+using DevFreela.Application.Services.Interfaces;
+using DevFreela.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -12,6 +14,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<OpenigTimeOption>(configuration.GetSection("OpenigTime"));
 
+builder.Services.AddSingleton<DevFreelaDbContext>();
+
+builder.Services.AddScoped<IProjectService, ProjectService>();
+
+#region Ciclo de vida de uma instancia no projeto
 // AddSingleton - uma instância por aplicação
 //builder.Services.AddSingleton<ExampleClass>(e => new ExampleClass { Name = "Initial Stage"});
 
@@ -20,6 +27,7 @@ builder.Services.AddScoped<ExampleClass>(e => new ExampleClass { Name = "Initial
 
 // AddTransient - uma instância por classe
 //builder.Services.AddTransient<ExampleClass>();
+#endregion
 
 var app = builder.Build();
 
