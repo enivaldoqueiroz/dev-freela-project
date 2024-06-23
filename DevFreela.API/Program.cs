@@ -15,9 +15,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<OpenigTimeOption>(configuration.GetSection("OpenigTime"));
 
-builder.Services.AddSingleton<DevFreelaDbContext>();
-
 builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddDbContext<DevFreelaDbContext>( 
     options => options.UseNpgsql(configuration.GetConnectionString("DevFreelaCs")));

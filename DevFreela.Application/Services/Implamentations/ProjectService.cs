@@ -24,6 +24,7 @@ namespace DevFreela.Application.Services.Implamentations
                                           inputModel.TotalCost);
 
             _dbContext.Projects.Add(project);
+            _dbContext.SaveChanges();
 
             return project.Id;
         }
@@ -35,6 +36,8 @@ namespace DevFreela.Application.Services.Implamentations
                                                                inputModel.IdUser);
 
             _dbContext.ProjectComments.Add(projectComment);
+
+            _dbContext.SaveChanges();
         }
 
         public void Delete(int id)
@@ -49,6 +52,8 @@ namespace DevFreela.Application.Services.Implamentations
             Project project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
 
             project.Finish();
+
+            _dbContext.SaveChanges();
         }
 
         public List<ProjectViewModel> GetAll(string query)
@@ -82,15 +87,17 @@ namespace DevFreela.Application.Services.Implamentations
             Project project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
 
             project.Start();
+
+            _dbContext.SaveChanges();
         }
 
-        public int Update(UpdateProjectInputModel inputModel)
+        public void Update(UpdateProjectInputModel inputModel)
         {
             Project project = _dbContext.Projects.SingleOrDefault(p => p.Id == inputModel.Id);
 
             project.Update(inputModel.Title, inputModel.Description, inputModel.TotalCost);
 
-            return project.Id;
+            _dbContext.SaveChanges();
         }
     }
 }
