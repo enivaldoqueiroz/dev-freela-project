@@ -2,6 +2,7 @@ using DevFreela.API.Model;
 using DevFreela.Application.Services.Implamentations;
 using DevFreela.Application.Services.Interfaces;
 using DevFreela.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -17,6 +18,9 @@ builder.Services.Configure<OpenigTimeOption>(configuration.GetSection("OpenigTim
 builder.Services.AddSingleton<DevFreelaDbContext>();
 
 builder.Services.AddScoped<IProjectService, ProjectService>();
+
+builder.Services.AddDbContext<DevFreelaDbContext>( 
+    options => options.UseNpgsql(configuration.GetConnectionString("DevFreelaCs")));
 
 #region Ciclo de vida de uma instancia no projeto
 // AddSingleton - uma instância por aplicação
