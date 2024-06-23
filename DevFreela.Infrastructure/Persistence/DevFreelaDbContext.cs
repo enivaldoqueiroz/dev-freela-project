@@ -6,6 +6,8 @@ namespace DevFreela.Infrastructure.Persistence
 {
     public class DevFreelaDbContext : DbContext
     {
+        public DevFreelaDbContext() { }
+
         public DevFreelaDbContext(DbContextOptions<DevFreelaDbContext> options) : base(options)
         {
 
@@ -21,5 +23,26 @@ namespace DevFreela.Infrastructure.Persistence
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            string conn = "User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=db_api_devfreela001;";
+
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql(conn);
+            }
+        }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+
+        //        IConfigurationRoot configuration = new ConfigurationBuilder()
+        //           .SetBasePath(Directory.GetCurrentDirectory())
+        //           .AddJsonFile("appsettings.json")
+        //           .Build();
+        //        var connectionString = configuration.GetConnectionString("DevFreelaCs");
+        //        optionsBuilder.UseNpgsql(connectionString);
+        //}
     }
 }
