@@ -69,7 +69,7 @@ namespace DevFreela.API.Controllers
         }
 
         // api/projects/3 DELETE
-        [HttpPost("{id}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _projectService.Delete(id);
@@ -96,7 +96,7 @@ namespace DevFreela.API.Controllers
         }
 
         // api/projects/1/finish
-        [HttpPost("{id}/finish")]
+        [HttpPut("{id}/finish")]
         public IActionResult Finish(int id) 
         { 
             _projectService.Finish(id);

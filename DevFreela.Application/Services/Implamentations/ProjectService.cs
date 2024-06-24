@@ -3,6 +3,7 @@ using DevFreela.Application.Services.Interfaces;
 using DevFreela.Application.ViewModels;
 using DevFreela.Core.Entities;
 using DevFreela.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevFreela.Application.Services.Implamentations
 {
@@ -67,7 +68,10 @@ namespace DevFreela.Application.Services.Implamentations
 
         public ProjectDetailsViewModel GetById(int id)
         {
-            Project project = _dbContext.Projects.FirstOrDefault(p => p.Id == id);
+            Project project = _dbContext.Projects
+                                        .Include(p => p.Client)
+                                        .Include(p => p.Freelancer)
+                                        .SingleOrDefault(p => p.Id == id);
 
             if (project is null) return null;
 
@@ -76,7 +80,9 @@ namespace DevFreela.Application.Services.Implamentations
                                                                                           project.Description,
                                                                                           project.TotalCost,
                                                                                           project.StartedAt,
-                                                                                          project.FinishedAt
+                                                                                          project.FinishedAt,
+                                                                                          project.Client.FullName,
+                                                                                          project.Freelancer.FullName
                                                                                          );
 
             return projectDetailsViewModel;
