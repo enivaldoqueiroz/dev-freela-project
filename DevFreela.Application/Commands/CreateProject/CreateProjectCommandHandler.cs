@@ -1,7 +1,6 @@
 ﻿using DevFreela.Core.Entities;
 using DevFreela.Infrastructure.Persistence;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace DevFreela.Application.Commands.CreateProject
 {

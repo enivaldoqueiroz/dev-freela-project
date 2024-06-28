@@ -5,7 +5,6 @@ using DevFreela.Application.Services.Interfaces;
 using DevFreela.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -24,7 +23,7 @@ builder.Services.Configure<OpenigTimeOption>(configuration.GetSection("OpenigTim
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddMediatR(typeof(CreateProjectCommand));
+builder.Services.AddMediatR(x => x.RegisterServicesFromAssembly(typeof(CreateProjectCommand).Assembly));
 
 #region Ciclo de vida de uma instancia no projeto
 // AddSingleton - uma instância por aplicação
