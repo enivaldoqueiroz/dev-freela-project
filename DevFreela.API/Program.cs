@@ -1,8 +1,11 @@
 using DevFreela.API.Model;
+using DevFreela.Application.Commands.CreateProject;
 using DevFreela.Application.Services.Implamentations;
 using DevFreela.Application.Services.Interfaces;
 using DevFreela.Infrastructure.Persistence;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -13,13 +16,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<DevFreelaDbContext>( 
+    options => options.UseNpgsql(configuration.GetConnectionString("DevFreelaCs")));
+
 builder.Services.Configure<OpenigTimeOption>(configuration.GetSection("OpenigTime"));
 
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddDbContext<DevFreelaDbContext>( 
-    options => options.UseNpgsql(configuration.GetConnectionString("DevFreelaCs")));
+builder.Services.AddMediatR(typeof(CreateProjectCommand));
 
 #region Ciclo de vida de uma instancia no projeto
 // AddSingleton - uma instância por aplicação
