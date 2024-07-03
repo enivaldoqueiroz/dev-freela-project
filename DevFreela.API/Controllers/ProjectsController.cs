@@ -1,4 +1,5 @@
-﻿using DevFreela.Application.Commands.CreateProject;
+﻿using DevFreela.Application.Commands.CreateComment;
+using DevFreela.Application.Commands.CreateProject;
 using DevFreela.Application.InputModels;
 using DevFreela.Application.Services.Interfaces;
 using DevFreela.Application.ViewModels;
@@ -47,11 +48,7 @@ namespace DevFreela.API.Controllers
         public async Task<IActionResult> Post([FromBody] CreateProjectCommand command)
         {
             if (command.Title.Length > 50)
-            {
                return BadRequest();
-            }
-
-            //int id = _projectService.Create(inputModel);
 
             int id = await _mediator.Send(command);
 
@@ -83,10 +80,10 @@ namespace DevFreela.API.Controllers
 
         // api/projects/1/comments POST
         [HttpPost("{id}/comments")]
-        public IActionResult PostComment(int id, [FromBody] CreateCommentInputModel inputModel)
+        public async Task<IActionResult> PostComment(int id, [FromBody] CreateCommentCommand command)
         {
-            _projectService.CreateComment(inputModel);
-            
+            await _mediator.Send(command);
+
             return NoContent(); 
         }
 
