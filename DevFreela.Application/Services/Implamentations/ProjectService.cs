@@ -21,24 +21,6 @@ namespace DevFreela.Application.Services.Implamentations
             _connectionString = configuration.GetConnectionString("DevFreelaCs");
         }
 
-        public void CreateComment(CreateCommentInputModel inputModel)
-        {
-            ProjectComment projectComment = new ProjectComment(inputModel.Content, 
-                                                               inputModel.IdProject, 
-                                                               inputModel.IdUser);
-
-            _dbContext.ProjectComments.Add(projectComment);
-
-            _dbContext.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            Project project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
-
-            project.Cancel();
-        }
-
         public void Finish(int id)
         {
             Project project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
@@ -99,15 +81,6 @@ namespace DevFreela.Application.Services.Implamentations
                                                     startedat = project.StartedAt, 
                                                     id});
             }
-        }
-
-        public void Update(UpdateProjectInputModel inputModel)
-        {
-            Project project = _dbContext.Projects.SingleOrDefault(p => p.Id == inputModel.Id);
-
-            project.Update(inputModel.Title, inputModel.Description, inputModel.TotalCost);
-
-            _dbContext.SaveChanges();
         }
     }
 }
