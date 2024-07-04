@@ -3,23 +3,22 @@ using DevFreela.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevFreela.Application.Commands.UpdateProject
+namespace DevFreela.Application.Commands.DeleteProject
 {
-    public class UpdateProjectCommandHandler : IRequestHandler<UpdateProjectCommand, Unit>
+    public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand, Unit>
     {
         private readonly DevFreelaDbContext _dbContext;
 
-        public UpdateProjectCommandHandler(DevFreelaDbContext dbContext)
+        public DeleteProjectCommandHandler(DevFreelaDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<Unit> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
         {
             Project project = await _dbContext.Projects.SingleOrDefaultAsync(p => p.Id == request.Id);
 
-            project.Update(request.Title, request.Description, request.TotalCost);
-
+            project.Cancel();
             await _dbContext.SaveChangesAsync();
 
             return Unit.Value;
