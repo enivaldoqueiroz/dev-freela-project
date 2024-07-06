@@ -1,8 +1,8 @@
 ﻿using DevFreela.Application.Commands.CreateComment;
 using DevFreela.Application.Commands.CreateProject;
 using DevFreela.Application.Commands.DeleteProject;
+using DevFreela.Application.Commands.FinishProject;
 using DevFreela.Application.Commands.UpdateProject;
-using DevFreela.Application.InputModels;
 using DevFreela.Application.Queries.GetAllProjects;
 using DevFreela.Application.Services.Interfaces;
 using DevFreela.Application.ViewModels;
@@ -103,10 +103,12 @@ namespace DevFreela.API.Controllers
 
         // api/projects/1/finish
         [HttpPut("{id}/finish")]
-        public IActionResult Finish(int id) 
-        { 
-            _projectService.Finish(id);
+        public async Task<IActionResult> Finish(int id) 
+        {
+            var command = new FinishProjectCommand(id);
 
+            await _mediator.Send(command);
+            
             return NoContent(); 
         }
     }
