@@ -11,7 +11,7 @@
             BirthDate = birthDate;
             Active = true;
 
-            CreateAt = DateTime.Now;
+            CreateAt = DateTime.UtcNow;
             Skills = new List<UserSkill>();
             OwnedProjects = new List<Project>();
             FreelanceProjects = new List<Project>();

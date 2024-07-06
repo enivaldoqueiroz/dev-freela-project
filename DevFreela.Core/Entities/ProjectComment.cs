@@ -7,7 +7,7 @@
             Content = content;
             IdProject = idProject;
             IdUser = idUser;
-            CreateAt = DateTime.Now;
+            CreateAt = DateTime.UtcNow;
         }
 
         public string Content { get; private set; }

@@ -12,7 +12,7 @@ namespace DevFreela.Core.Entities
             IdFreelancer = idFreelancer;
             TotalCost = totalCost;
 
-            CreateAt = DateTime.Now;
+            CreateAt = DateTime.UtcNow;
             Status = ProjectStatusEnum.Created;
             Comments = new List<ProjectComment>();
         }
@@ -43,7 +43,7 @@ namespace DevFreela.Core.Entities
             if (Status == ProjectStatusEnum.InProgress)
             {
                 _ = Status == ProjectStatusEnum.Finished;
-                FinishedAt = DateTime.Now;
+                FinishedAt = DateTime.UtcNow;
             }
         }
 
@@ -52,7 +52,7 @@ namespace DevFreela.Core.Entities
             if (Status == ProjectStatusEnum.Created)
             {
                 _ = Status == ProjectStatusEnum.InProgress;
-                StartedAt = DateTime.Now;
+                StartedAt = DateTime.UtcNow;
             }
         }
 
