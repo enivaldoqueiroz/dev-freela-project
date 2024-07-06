@@ -1,6 +1,8 @@
-﻿using DevFreela.Core.Entities;
+﻿using Dapper;
+using DevFreela.Core.Entities;
 using DevFreela.Core.Repositories;
 using DevFreela.Infrastructure.Persistence;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -22,9 +24,32 @@ namespace DevFreela.Infrastructure.Repositories
             return await _dbContext.Projects.ToListAsync();
         }
 
-        public Task<Project> GetByIdAsync()
+        public async Task<Project> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Projects
+                                   .Include(p => p.Client)
+                                   .Include(p => p.Freelancer)
+                                   .SingleOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task AddAsync(Project project)
+        {
+            await _dbContext.Projects.AddAsync(project);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task StartAsync(Project project)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(_connectionString))
+            {
+                sqlConnection.Open();
+
+                string script = "UPDATE Projects " +
+                                "SET Status = @status, StartedAt = @startedat" +
+                                "WHERE Id = @id";
+
+                sqlConnection.ExecuteAsync(script, new { status = project.Status, startedat = project.StartedAt, project.Id });
+            }
         }
     }
 }
