@@ -19,7 +19,9 @@ namespace DevFreela.Application.Services.Implamentations
         {
             User user = new User(inputModel.FullName,
                                  inputModel.Email,
-                                 inputModel.BirthDate);
+                                 inputModel.BirthDate,
+                                 inputModel.Password,
+                                 inputModel.Role);
 
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
