@@ -56,5 +56,13 @@ namespace DevFreela.Infrastructure.Repositories
         {
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task<Project> GetDetailsByIdAsync(int id)
+        {
+            return await _dbContext.Projects
+                                   .Include(p => p.Client)
+                                   .Include(p => p.Freelancer)
+                                   .SingleOrDefaultAsync(p => p.Id == id);
+        }
     }
 }
