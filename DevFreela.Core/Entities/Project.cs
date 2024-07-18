@@ -34,7 +34,7 @@ namespace DevFreela.Core.Entities
         {
             if (Status == ProjectStatusEnum.InProgress)
             {
-                _ = Status == ProjectStatusEnum.Cancelled;
+                Status = ProjectStatusEnum.Cancelled;
             }
         }
 
@@ -42,7 +42,7 @@ namespace DevFreela.Core.Entities
         {
             if (Status == ProjectStatusEnum.InProgress)
             {
-                _ = Status == ProjectStatusEnum.Finished;
+                Status = ProjectStatusEnum.Finished;
                 FinishedAt = DateTime.UtcNow;
             }
         }
@@ -51,7 +51,7 @@ namespace DevFreela.Core.Entities
         {
             if (Status == ProjectStatusEnum.Created)
             {
-                _ = Status == ProjectStatusEnum.InProgress;
+                Status = ProjectStatusEnum.InProgress;
                 StartedAt = DateTime.UtcNow;
             }
         }
