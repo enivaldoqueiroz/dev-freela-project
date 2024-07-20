@@ -75,6 +75,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddDbContext<DevFreelaDbContext>( 
     options => options.UseNpgsql(configuration.GetConnectionString("DevFreelaCs")));
 
+builder.Services.AddHttpClient();
+
 builder.Services.Configure<OpenigTimeOption>(configuration.GetSection("OpenigTime"));
 
 builder.Services.AddScoped<IProjectService, ProjectService>();
