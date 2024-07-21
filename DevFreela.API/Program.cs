@@ -2,6 +2,7 @@ using DevFreela.API.Extensions;
 using DevFreela.API.Filters;
 using DevFreela.API.Model;
 using DevFreela.Application.Commands.CreateProject;
+using DevFreela.Application.Consumers;
 using DevFreela.Application.Validators;
 using DevFreela.Infrastructure.Persistence;
 using FluentValidation.AspNetCore;
@@ -69,6 +70,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddDbContext<DevFreelaDbContext>( 
     options => options.UseNpgsql(configuration.GetConnectionString("DevFreelaCs")));
+
+builder.Services.AddHostedService<PaymentApprovedConsumer>();
 
 builder.Services.AddHttpClient();
 
