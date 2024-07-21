@@ -65,6 +65,8 @@ namespace DevFreela.Application.Consumers
                 var project = await projectRepository.GetByIdAsync(id);
 
                 project.Finish();
+
+                await projectRepository.SaveChangesAsync();
             }
         }
     }
