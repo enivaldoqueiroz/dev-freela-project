@@ -1,15 +1,9 @@
+using DevFreela.API.Extensions;
 using DevFreela.API.Filters;
 using DevFreela.API.Model;
 using DevFreela.Application.Commands.CreateProject;
-using DevFreela.Application.Services.Implamentations;
-using DevFreela.Application.Services.Interfaces;
 using DevFreela.Application.Validators;
-using DevFreela.Core.Repositories;
-using DevFreela.Core.Services;
-using DevFreela.Infrastructure.AuthServices;
-using DevFreela.Infrastructure.Payment;
 using DevFreela.Infrastructure.Persistence;
-using DevFreela.Infrastructure.Repositories;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -80,14 +74,7 @@ builder.Services.AddHttpClient();
 
 builder.Services.Configure<OpenigTimeOption>(configuration.GetSection("OpenigTime"));
 
-builder.Services.AddScoped<IProjectService, ProjectService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IPaymentService, PaymentService>();
-
-builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+builder.Services.AddInfrastruture();
 
 builder.Services.AddMediatR(x => x.RegisterServicesFromAssembly(typeof(CreateProjectCommand).Assembly));
 
