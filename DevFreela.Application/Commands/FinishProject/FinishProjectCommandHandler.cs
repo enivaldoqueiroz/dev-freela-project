@@ -21,8 +21,6 @@ namespace DevFreela.Application.Commands.FinishProject
         {
             Project project = await _projectRepository.GetByIdAsync(request.Id);
 
-            project.Finish();
-
             PaymentInfoDto paymentInfoDto = new PaymentInfoDto(request.Id, 
                                                                request.CreditCardNumber, 
                                                                request.Cvv,
@@ -30,14 +28,13 @@ namespace DevFreela.Application.Commands.FinishProject
                                                                request.FullName, 
                                                                project.TotalCost);
 
-            bool result = await _paymentService.ProcessPayment(paymentInfoDto);
+            await _paymentService.ProcessPayment(paymentInfoDto);
 
-            if (!result)
-                project.SetPaymentPending();
+            project.SetPaymentPending();
 
             await _projectRepository.SaveChangesAsync();
 
-            return result;
+            return true;
         }
     }
 }
