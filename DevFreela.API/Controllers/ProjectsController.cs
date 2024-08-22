@@ -28,9 +28,10 @@ namespace DevFreela.API.Controllers
 
         // api/projects?query=net core GET
         [HttpGet]
-        public async Task<IActionResult> Get(string? query)
+        [AllowAnonymous]
+        public async Task<IActionResult> Get(string? query, int page)
         {
-            var getAllProjectQuery = new GetAllProjectsQuery(query);
+            var getAllProjectQuery = new GetAllProjectsQuery(query, page);
 
             var projects = await _mediator.Send(getAllProjectQuery);
 

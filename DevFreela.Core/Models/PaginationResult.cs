@@ -1,8 +1,8 @@
-﻿namespace DevFreela.Infrastructure.Persistence.Models
+﻿namespace DevFreela.Core.Models
 {
     public class PaginationResult<T>
     {
-        public PaginationResult(){ }
+        public PaginationResult() { }
 
         public PaginationResult(int page, int totalPages, int pageSize, int itensCount, List<T> data)
         {

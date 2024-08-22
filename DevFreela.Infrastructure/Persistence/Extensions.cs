@@ -1,4 +1,4 @@
-﻿using DevFreela.Infrastructure.Persistence.Models;
+﻿using DevFreela.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DevFreela.Infrastructure.Persistence
