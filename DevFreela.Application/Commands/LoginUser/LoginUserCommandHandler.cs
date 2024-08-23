@@ -2,7 +2,6 @@
 using DevFreela.Core.Entities;
 using DevFreela.Core.Repositories;
 using DevFreela.Core.Services;
-using DevFreela.Infrastructure.Repositories;
 using MediatR;
 
 namespace DevFreela.Application.Commands.LoginUser

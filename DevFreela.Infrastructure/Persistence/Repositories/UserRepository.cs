@@ -3,7 +3,7 @@ using DevFreela.Core.Repositories;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevFreela.Infrastructure.Repositories
+namespace DevFreela.Infrastructure.Persistence.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -28,7 +28,7 @@ namespace DevFreela.Infrastructure.Repositories
 
         public async Task<User> GetUserByEmailAndPasswordAsync(string email, string passwordHash)
         {
-           return await _dbContext.Users.SingleOrDefaultAsync(u => u.Email == email && u.Password == passwordHash);
+            return await _dbContext.Users.SingleOrDefaultAsync(u => u.Email == email && u.Password == passwordHash);
         }
     }
 }

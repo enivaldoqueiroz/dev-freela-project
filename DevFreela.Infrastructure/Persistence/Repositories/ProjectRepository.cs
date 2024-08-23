@@ -7,7 +7,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace DevFreela.Infrastructure.Repositories
+namespace DevFreela.Infrastructure.Persistence.Repositories
 {
     public class ProjectRepository : IProjectRepository
     {
@@ -25,14 +25,14 @@ namespace DevFreela.Infrastructure.Repositories
         {
             IQueryable<Project> projects = _dbContext.Projects;
 
-            if (!string.IsNullOrEmpty(query)) 
+            if (!string.IsNullOrEmpty(query))
             {
-                projects = projects.Where(p => 
+                projects = projects.Where(p =>
                                           p.Title.Contains(query) ||
                                           p.Description.Contains(query));
             }
 
-            return await projects.GetPaged<Project>(page, PAGE_SIZE);
+            return await projects.GetPaged(page, PAGE_SIZE);
         }
 
         public async Task<Project> GetByIdAsync(int id)

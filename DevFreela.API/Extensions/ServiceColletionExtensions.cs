@@ -5,7 +5,7 @@ using DevFreela.Core.Services;
 using DevFreela.Infrastructure.AuthServices;
 using DevFreela.Infrastructure.MessageBus;
 using DevFreela.Infrastructure.Payment;
-using DevFreela.Infrastructure.Repositories;
+using DevFreela.Infrastructure.Persistence.Repositories;
 
 namespace DevFreela.API.Extensions
 {
