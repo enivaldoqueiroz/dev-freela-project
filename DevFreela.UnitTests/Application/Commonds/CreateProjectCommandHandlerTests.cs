@@ -14,6 +14,10 @@ namespace DevFreela.UnitTests.Application.Commonds
             // Arrange
             var unitOfWorkMock = new Mock<IUnitOfWork>();
             var projectRepositoryMock = new Mock<IProjectRepository>();
+            var skillRepositoryMock = new Mock<ISkillRepository>();
+
+            unitOfWorkMock.SetupGet(uow => uow.Projects).Returns(projectRepositoryMock.Object);
+            unitOfWorkMock.SetupGet(uow => uow.Skills).Returns(skillRepositoryMock.Object);
 
             var createProjectCommand = new CreateProjectCommand
             {
