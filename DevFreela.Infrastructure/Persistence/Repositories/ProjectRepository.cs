@@ -12,7 +12,7 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
     {
         private readonly DevFreelaDbContext _dbContext;
         private readonly string _connectionString;
-        private const int PAGE_SIZE = 2;
+        private const int PAGE_SIZE = 10;
 
         public ProjectRepository(DevFreelaDbContext dbContext, IConfiguration configuration)
         {

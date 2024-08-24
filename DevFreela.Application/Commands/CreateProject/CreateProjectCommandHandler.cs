@@ -22,7 +22,17 @@ namespace DevFreela.Application.Commands.CreateProject
                                           request.IdFreela,
                                           request.TotalCost);
 
+            project.Comments.Add(new ProjectComment("Project was created.", project.Id, request.IdClient));
+
+            await _unitOfWork.BeginTransactionAsync();
+
             await _unitOfWork.Projects.AddAsync(project);
+            await _unitOfWork.SaveChangesAsync();
+
+            await _unitOfWork.Skills.AddSkillFromProjectAsync(project);
+            await _unitOfWork.SaveChangesAsync();
+
+            await _unitOfWork.CommitAsync();
 
             return project.Id;
         }

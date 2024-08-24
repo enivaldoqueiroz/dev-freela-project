@@ -6,6 +6,9 @@ namespace DevFreela.Infrastructure.Persistence
     {
         IProjectRepository Projects { get; }
         IUserRepository Users { get; }
-        Task<int> CompleteAsync();
+        ISkillRepository Skills { get; }
+        Task<int> SaveChangesAsync();
+        Task BeginTransactionAsync();
+        Task CommitAsync();
     }
 }

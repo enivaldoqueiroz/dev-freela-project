@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using DevFreela.Core.DTOs;
+using DevFreela.Core.Entities;
 using DevFreela.Core.Repositories;
 using DevFreela.Infrastructure.Persistence;
 using Microsoft.Data.SqlClient;
@@ -16,6 +17,18 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
         {
             _dbContext = dbContext;
             _connectionString = configuration.GetConnectionString("DevFreelaCs");
+        }
+
+        public async Task AddSkillFromProjectAsync(Project project)
+        {
+            // App Xamarim de Marketplace
+            var words = project.Description.Split(' ');
+            var length = words.Length;
+
+            var skill = $"{project.Id} - {words[length - 1]}";
+            //"1 - Marketplace"
+
+            await _dbContext.Skills.AddAsync(new Skill(skill));
         }
 
         public async Task<List<SkillDTO>> GetAllAsync()
