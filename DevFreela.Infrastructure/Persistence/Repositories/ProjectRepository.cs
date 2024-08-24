@@ -39,6 +39,7 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
             return await _dbContext.Projects
                                    .Include(p => p.Client)
                                    .Include(p => p.Freelancer)
+                                   .AsNoTracking()
                                    .SingleOrDefaultAsync(p => p.Id == id);
         }
 
@@ -77,6 +78,15 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
         public async Task AddCommentAsync(ProjectComment projectComment)
         {
             await _dbContext.ProjectComments.AddAsync(projectComment);
+        }
+
+        public async Task UpdateAsync(Project project)
+        {
+            // _dbContext.Entry(project).State = EntityState.Modified;
+
+            _dbContext.Projects.Update(project);
+
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
