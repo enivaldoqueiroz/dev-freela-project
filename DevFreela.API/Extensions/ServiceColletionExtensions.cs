@@ -11,7 +11,7 @@ namespace DevFreela.API.Extensions
 {
     public static class ServiceColletionExtensions
     {
-        public static IServiceCollection AddInfrastruture(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructureApi(this IServiceCollection services)
         {
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IUserService, UserService>();
@@ -19,9 +19,9 @@ namespace DevFreela.API.Extensions
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IMessageBusService, MessageBusService>();
             
-            services.AddScoped<IProjectRepository, ProjectRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ISkillRepository, SkillRepository>();
+            //services.AddScoped<IProjectRepository, ProjectRepository>();
+            //services.AddScoped<IUserRepository, UserRepository>();
+            //services.AddScoped<ISkillRepository, SkillRepository>();
 
             return services;
         }

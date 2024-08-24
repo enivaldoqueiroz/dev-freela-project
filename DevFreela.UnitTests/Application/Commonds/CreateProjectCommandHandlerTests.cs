@@ -1,6 +1,7 @@
 ﻿using DevFreela.Application.Commands.CreateProject;
 using DevFreela.Core.Entities;
 using DevFreela.Core.Repositories;
+using DevFreela.Infrastructure.Persistence;
 using Moq;
 
 namespace DevFreela.UnitTests.Application.Commonds
@@ -11,6 +12,7 @@ namespace DevFreela.UnitTests.Application.Commonds
         public async Task InputDataIsOk_Executed_ReturnProjectId()
         {
             // Arrange
+            var unitOfWorkMock = new Mock<IUnitOfWork>();
             var projectRepositoryMock = new Mock<IProjectRepository>();
 
             var createProjectCommand = new CreateProjectCommand
@@ -22,7 +24,7 @@ namespace DevFreela.UnitTests.Application.Commonds
                 IdFreela = 2
             };
 
-            var createProjectCommadHandler = new CreateProjectCommandHandler(projectRepositoryMock.Object);
+            var createProjectCommadHandler = new CreateProjectCommandHandler(unitOfWorkMock.Object);
 
             // Act
             var id = await createProjectCommadHandler.Handle(createProjectCommand, new CancellationToken());

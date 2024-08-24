@@ -29,7 +29,7 @@ namespace DevFreela.API.Controllers
         // api/projects?query=net core GET
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Get(string? query, int page)
+        public async Task<IActionResult> Get(string? query, int page = 1)
         {
             var getAllProjectQuery = new GetAllProjectsQuery(query, page);
 

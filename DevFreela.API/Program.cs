@@ -1,4 +1,3 @@
-using DevFreela.API.Extensions;
 using DevFreela.API.Filters;
 using DevFreela.API.Model;
 using DevFreela.Application.Commands.CreateProject;
@@ -12,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using DevFreela.Infrastructure;
+using DevFreela.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -51,25 +52,25 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//                .AddJwtBearer(options =>
+//                {
+//                    options.TokenValidationParameters = new TokenValidationParameters
+//                    {
+//                        ValidateIssuer = true,
+//                        ValidateAudience = true,
+//                        ValidateLifetime = true,
+//                        ValidateIssuerSigningKey = true,
 
-                        ValidIssuer = configuration["Jwt:Issuer"],
-                        ValidAudience = configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey
-                            (Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
-                    };
-                });
+//                        ValidIssuer = configuration["Jwt:Issuer"],
+//                        ValidAudience = configuration["Jwt:Audience"],
+//                        IssuerSigningKey = new SymmetricSecurityKey
+//                            (Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+//                    };
+//                });
 
-builder.Services.AddDbContext<DevFreelaDbContext>( 
-    options => options.UseNpgsql(configuration.GetConnectionString("DevFreelaCs")));
+//builder.Services.AddDbContext<DevFreelaDbContext>( 
+//    options => options.UseNpgsql(configuration.GetConnectionString("DevFreelaCs")));
 
 builder.Services.AddHostedService<PaymentApprovedConsumer>();
 
@@ -77,7 +78,8 @@ builder.Services.AddHttpClient();
 
 builder.Services.Configure<OpenigTimeOption>(configuration.GetSection("OpenigTime"));
 
-builder.Services.AddInfrastruture();
+builder.Services.AddInfrastructureApi();
+builder.Services.AddInfrastructure(configuration);
 
 builder.Services.AddMediatR(x => x.RegisterServicesFromAssembly(typeof(CreateProjectCommand).Assembly));
 
